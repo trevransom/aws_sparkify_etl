@@ -7,6 +7,10 @@ from tqdm import tqdm
 
 
 def load_staging_tables(cur, conn):
+    """
+    - Here we are going load the song file into a dataframe
+    - Then we insert it to the relevant table if it contains just 1 entry
+    """
     for query in tqdm(copy_table_queries, ascii=True):
         print(query)
         cur.execute(query)
@@ -14,6 +18,10 @@ def load_staging_tables(cur, conn):
 
 
 def insert_tables(cur, conn):
+    """
+    - Here we are going load the song file into a dataframe
+    - Then we insert it to the relevant table if it contains just 1 entry
+    """
     for query in tqdm(insert_table_queries, ascii=True):
         print(query)
         # this query needs to get passed the data that it'll read in
@@ -23,6 +31,10 @@ def insert_tables(cur, conn):
 
 
 def main():
+    """
+    - Connect to database
+    - Call data processing functions
+    """
     config = configparser.ConfigParser()
     config.read('dwh.cfg')
 
