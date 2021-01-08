@@ -12,9 +12,11 @@ def load_staging_tables(cur, conn):
     - Then we insert it to the relevant table if it contains just 1 entry
     """
     for query in tqdm(copy_table_queries, ascii=True):
-        print(query)
-        cur.execute(query)
-        conn.commit()
+        try:
+            cur.execute(query)
+            conn.commit()
+        except psycopg2.Error as e:
+            print(e)
 
 
 def insert_tables(cur, conn):
@@ -23,11 +25,11 @@ def insert_tables(cur, conn):
     - Then we insert it to the relevant table if it contains just 1 entry
     """
     for query in tqdm(insert_table_queries, ascii=True):
-        print(query)
-        # this query needs to get passed the data that it'll read in
-        # i need to somehow pull the redshift data and clean it and then put in into this cur
-        cur.execute(query)
-        conn.commit()
+        try:
+            cur.execute(query)
+            conn.commit()
+        except psycopg2.Error as e:
+            print(e)
 
 
 def main():
